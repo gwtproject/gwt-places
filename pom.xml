@@ -26,7 +26,7 @@
   </developers>
   <scm>
     <connection>scm:git:https://github.com/tbroyer/gwt-places.git</connection>
-    <developerConnection>scm:git:git@github.com:tbroyer/bullet.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:tbroyer/gwt-places.git</developerConnection>
     <url>https://github.com/tbroyer/gwt-places</url>
     <tag>HEAD</tag>
   </scm>
