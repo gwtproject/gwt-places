@@ -17,6 +17,7 @@ import javax.tools.Diagnostic;
 import com.google.auto.common.AnnotationMirrors;
 import com.google.auto.common.BasicAnnotationProcessor.ProcessingStep;
 import com.google.auto.common.MoreElements;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.gwt.place.shared.PlaceTokenizer;
 import com.google.gwt.place.shared.Prefix;
@@ -42,7 +43,7 @@ public class PrefixProcessingStep implements ProcessingStep {
   }
 
   @Override
-  public void process(SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
+  public Set<Element> process(SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
     Set<Element> elements = elementsByAnnotation.get(Prefix.class);
     for (Element element : elements) {
       switch (element.getKind()) {
@@ -78,5 +79,6 @@ public class PrefixProcessingStep implements ProcessingStep {
         }
       }  // else error should be reported by the compiler
     }
+    return ImmutableSet.of();
   }
 }

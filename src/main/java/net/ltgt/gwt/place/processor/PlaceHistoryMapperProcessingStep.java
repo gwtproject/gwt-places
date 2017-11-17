@@ -20,6 +20,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 import com.google.auto.common.BasicAnnotationProcessor.ProcessingStep;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.gwt.place.impl.AbstractPlaceHistoryMapper;
 import com.google.gwt.place.shared.PlaceTokenizer;
@@ -70,7 +71,7 @@ class PlaceHistoryMapperProcessingStep implements ProcessingStep {
     return Collections.singleton(WithTokenizers.class);
   }
 
-  public void process(SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
+  public Set<Element> process(SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
     for (Element element : elementsByAnnotation.get(WithTokenizers.class)) {
       PlaceHistoryGeneratorContext context = PlaceHistoryGeneratorContext.create(messager, types, elements, element);
       if (context == null) {
@@ -87,6 +88,7 @@ class PlaceHistoryMapperProcessingStep implements ProcessingStep {
         messager.printMessage(Diagnostic.Kind.ERROR, sw.toString());
       }
     }
+    return ImmutableSet.of();
   }
 
   private void generate(PlaceHistoryGeneratorContext context) throws IOException {
