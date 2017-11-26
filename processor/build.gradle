@@ -1,0 +1,52 @@
+plugins {
+  id "java-library"
+  id "net.ltgt.apt" version "0.13"
+}
+apply from: "funcTest.gradle"
+apply from: "gwtTest.gradle"
+
+group = "org.gwtproject.place"
+version = "HEAD-SNAPSHOT"
+
+// src/testSupport/java will be compiled twiced: once with annotation processing, and once without
+sourceSets {
+  test {
+    java {
+      srcDir "src/testSupport/java"
+    }
+  }
+}
+
+// Do not run annotation processor, as we'll be testing it with compile-testing
+compileTestJava {
+  aptOptions.annotationProcessing = false
+}
+
+dependencies {
+  compileOnly "com.google.auto.service:auto-service:1.0-rc3"
+  apt "com.google.auto.service:auto-service:1.0-rc3"
+
+  api "com.google.auto:auto-common:0.8"
+  api "com.google.guava:guava:23.5-jre"
+  implementation(project(":")) {
+    transitive = false
+  }
+  implementation "com.squareup:javapoet:1.9.0"
+
+  testImplementation "junit:junit:4.12"
+  testImplementation "com.google.testing.compile:compile-testing:0.13"
+  testImplementation "org.mockito:mockito-core:2.12.0"
+}
+
+// Pending deployment on Sonatype OSS or other "real" Maven repository, use Jitpack for snapshots
+repositories {
+  maven { url 'https://jitpack.io/' }
+}
+configurations.all*.resolutionStrategy*.dependencySubstitution {
+  substitute module('org.gwtproject.event:gwt-event') with module('com.github.tbroyer.gwt-events:gwt-event:-SNAPSHOT')
+  substitute module('org.gwtproject.event:gwt-logical-event') with module('com.github.tbroyer.gwt-events:gwt-logical-event:-SNAPSHOT')
+  substitute module('org.gwtproject.user.history:gwt-history') with module('com.github.tbroyer:gwt-history:-SNAPSHOT')
+  // transitive dependency of gwt-history
+  substitute module('org.gwtproject.user.window:gwt-window') with module('com.github.tbroyer:gwt-window:-SNAPSHOT')
+  substitute module('org.gwtproject.http:gwt-http') with module('com.github.tbroyer:gwt-http:-SNAPSHOT')
+}

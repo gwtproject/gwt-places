@@ -1,0 +1,25 @@
+sourceSets {
+  funcTest {
+    java {
+      srcDir "src/testSupport/java"
+    }
+  }
+}
+
+task funcTest(type: Test) {
+  description 'Runs the integration tests'
+  group = 'verification'
+  testClassesDirs = sourceSets.funcTest.output.classesDirs
+  classpath = sourceSets.funcTest.runtimeClasspath
+
+  mustRunAfter test
+}
+compileFuncTestJava.mustRunAfter test
+check.dependsOn funcTest
+
+dependencies {
+  funcTestImplementation "junit:junit:4.12"
+  funcTestImplementation project(":")
+  funcTestApt files(jar)
+  funcTestApt configurations.runtimeClasspath
+}

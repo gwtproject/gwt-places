@@ -1,0 +1,65 @@
+plugins {
+  id "java-library"
+  id "maven"
+  id "net.ltgt.errorprone" version "0.0.13"
+  id "com.github.sherter.google-java-format" version "0.6"
+}
+apply from: "gwtTest.gradle"
+
+group = "org.gwtproject.place"
+version = "HEAD-SNAPSHOT"
+
+dependencies {
+  errorprone "com.google.errorprone:error_prone_core:2.1.2"
+
+  api "org.gwtproject.event:gwt-event:HEAD-SNAPSHOT"
+  api "org.gwtproject.event:gwt-logical-event:HEAD-SNAPSHOT"
+  implementation "org.gwtproject.user.history:gwt-history:HEAD-SNAPSHOT"
+  implementation "org.gwtproject.user.window:gwt-window:HEAD-SNAPSHOT"
+
+  testImplementation "junit:junit:4.12"
+}
+
+jar {
+  from sourceSets.main.allJava
+}
+
+assert JavaVersion.current().isJava8Compatible()
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+
+  plugins.withId("java-base") {
+    apply plugin: "net.ltgt.errorprone"
+    sourceCompatibility = JavaVersion.VERSION_1_8
+  }
+  tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs << "-Werror" << "-Xlint:all,-processing"
+    if (JavaVersion.current().isJava9Compatible()) {
+      options.compilerArgs << "--release" << "8"
+    }
+  }
+
+  tasks.withType(Javadoc) {
+    options.addBooleanOption("Xdoclint:all,-missing", true)
+  }
+}
+
+googleJavaFormat {
+  toolVersion = "1.5"
+}
+
+// Pending deployment on Sonatype OSS or other "real" Maven repository, use Jitpack for snapshots
+repositories {
+  maven { url 'https://jitpack.io/' }
+}
+configurations.all*.resolutionStrategy*.dependencySubstitution {
+  substitute module('org.gwtproject.event:gwt-event') with module('com.github.tbroyer.gwt-events:gwt-event:-SNAPSHOT')
+  substitute module('org.gwtproject.event:gwt-logical-event') with module('com.github.tbroyer.gwt-events:gwt-logical-event:-SNAPSHOT')
+  substitute module('org.gwtproject.user.history:gwt-history') with module('com.github.tbroyer:gwt-history:-SNAPSHOT')
+  substitute module('org.gwtproject.user.window:gwt-window') with module('com.github.tbroyer:gwt-window:-SNAPSHOT')
+  // transitive dependency of gwt-window
+  substitute module('org.gwtproject.http:gwt-http') with module('com.github.tbroyer:gwt-http:-SNAPSHOT')
+}

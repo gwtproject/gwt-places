@@ -1,0 +1,64 @@
+task generateGwtTestSources(type: Copy) {
+  from "src/funcTest/java"
+  into "$buildDir/generated/source/gwtTest/"
+  filter {
+    if (it == 'import junit.framework.TestCase;') {
+      return 'import com.google.gwt.junit.client.GWTTestCase;'
+    }
+    it.replace('extends TestCase {', '''extends GWTTestCase {
+  @Override
+  public String getModuleName() { return "org.gwtproject.place.PlaceSuite"; }''')
+      .replace('protected void setUp()', 'protected void gwtSetUp()')
+      .replace('super.setUp()', 'super.gwtSetUp()')
+      .replace('protected void tearDown()', 'protected void gwtTearDown()')
+      .replace('super.tearDown()', 'super.gwtTearDown()')
+  }
+
+  mustRunAfter compileFuncTestJava
+}
+
+sourceSets {
+  gwtTest {
+    java {
+      srcDirs files(generateGwtTestSources.destinationDir) { builtBy generateGwtTestSources }
+      srcDir "src/testSupport/java"
+    }
+    compileClasspath += sourceSets.funcTest.compileClasspath
+    runtimeClasspath += output + compileClasspath \
+        + sourceSets.main.allJava.sourceDirectories \
+        + sourceSets.gwtTest.allJava.sourceDirectories \
+        + files(sourceSets.gwtTest.output.generatedSourcesDir)
+  }
+}
+configurations {
+  gwtTestCompile.extendsFrom funcTestCompile
+  gwtTestImplementation.extendsFrom funcTestImplementation
+  gwtTestApt.extendsFrom funcTestApt
+  gwtTestRuntime.extendsFrom funcTestRuntime
+  gwtTestRuntimeOnly.extendsFrom funcTestRuntimeOnly
+}
+dependencies {
+  gwtTestImplementation "com.google.gwt:gwt-user:2.8.2"
+
+  gwtTestRuntimeOnly "com.google.gwt:gwt-dev:2.8.2"
+}
+
+task gwtTest(type: Test) {
+  def warDir = file("$buildDir/gwt/www-test")
+  def workDir = file("$buildDir/gwt/work")
+  def cacheDir = file("$buildDir/gwt/cache")
+  doFirst {
+    mkdir(warDir)
+    mkdir(workDir)
+    mkdir(cacheDir)
+  }
+
+  testClassesDirs = sourceSets.gwtTest.output.classesDirs
+  classpath = sourceSets.gwtTest.runtimeClasspath
+  include "**/*Suite.class"
+  systemProperty("gwt.args", "-ea -draftCompile -batch module -war \"$warDir\" -workDir \"$workDir\"")
+  systemProperty("gwt.persistentunitcachedir", cacheDir)
+
+  mustRunAfter funcTest
+}
+check.dependsOn gwtTest
