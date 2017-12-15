@@ -10,7 +10,7 @@ group = "org.gwtproject.place"
 version = "HEAD-SNAPSHOT"
 
 dependencies {
-  errorprone "com.google.errorprone:error_prone_core:2.1.2"
+  errorprone "com.google.errorprone:error_prone_core:2.1.3"
 
   api "org.gwtproject.event:gwt-event:HEAD-SNAPSHOT"
   api "org.gwtproject.event:gwt-logical-event:HEAD-SNAPSHOT"
