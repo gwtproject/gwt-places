@@ -72,10 +72,12 @@ class PlaceHistoryMapperProcessingStep implements ProcessingStep {
     this.getTokenizerMethodParameter = getTokenizerMethod.getParameters().get(0);
   }
 
+  @Override
   public Set<? extends Class<? extends Annotation>> annotations() {
     return ImmutableSet.of(WithTokenizers.class, WithFactory.class);
   }
 
+  @Override
   public Set<Element> process(
       SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
     for (Element element :
