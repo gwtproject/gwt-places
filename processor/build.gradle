@@ -37,16 +37,3 @@ dependencies {
   testImplementation "com.google.testing.compile:compile-testing:0.13"
   testImplementation "org.mockito:mockito-core:2.12.0"
 }
-
-// Pending deployment on Sonatype OSS or other "real" Maven repository, use Jitpack for snapshots
-repositories {
-  maven { url 'https://jitpack.io/' }
-}
-configurations.all*.resolutionStrategy*.dependencySubstitution {
-  substitute module('org.gwtproject.event:gwt-event') with module('com.github.tbroyer.gwt-events:gwt-event:-SNAPSHOT')
-  substitute module('org.gwtproject.event:gwt-logical-event') with module('com.github.tbroyer.gwt-events:gwt-logical-event:-SNAPSHOT')
-  substitute module('org.gwtproject.user.history:gwt-history') with module('com.github.tbroyer:gwt-history:-SNAPSHOT')
-  // transitive dependency of gwt-history
-  substitute module('org.gwtproject.user.window:gwt-window') with module('com.github.tbroyer:gwt-window:-SNAPSHOT')
-  substitute module('org.gwtproject.http:gwt-http') with module('com.github.tbroyer:gwt-http:-SNAPSHOT')
-}
