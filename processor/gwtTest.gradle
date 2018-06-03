@@ -33,7 +33,7 @@ sourceSets {
 configurations {
   gwtTestCompile.extendsFrom funcTestCompile
   gwtTestImplementation.extendsFrom funcTestImplementation
-  gwtTestApt.extendsFrom funcTestApt
+  gwtTestAnnotationProcessor.extendsFrom funcTestAnnotationProcessor
   gwtTestRuntime.extendsFrom funcTestRuntime
   gwtTestRuntimeOnly.extendsFrom funcTestRuntimeOnly
 }

@@ -20,6 +20,6 @@ check.dependsOn funcTest
 dependencies {
   funcTestImplementation "junit:junit:4.12"
   funcTestImplementation project(":")
-  funcTestApt files(jar)
-  funcTestApt configurations.runtimeClasspath
+  funcTestAnnotationProcessor files(jar)
+  funcTestAnnotationProcessor configurations.runtimeClasspath
 }
