@@ -30,17 +30,17 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.google.auto.service:auto-service:1.0-rc3")
-    annotationProcessor("com.google.auto.service:auto-service:1.0-rc3")
+    compileOnly("com.google.auto.service:auto-service:1.0-rc4")
+    annotationProcessor("com.google.auto.service:auto-service:1.0-rc4")
 
-    api("com.google.auto:auto-common:0.8")
-    api("com.google.guava:guava:23.5-jre")
+    api("com.google.auto:auto-common:0.10")
+    api("com.google.guava:guava:25.1-jre")
     implementation(project(":")) {
         isTransitive = false
     }
-    implementation("com.squareup:javapoet:1.9.0")
+    implementation("com.squareup:javapoet:1.11.1")
 
     testImplementation("junit:junit:4.12")
-    testImplementation("com.google.testing.compile:compile-testing:0.13")
-    testImplementation("org.mockito:mockito-core:2.12.0")
+    testImplementation("com.google.testing.compile:compile-testing:0.15")
+    testImplementation("org.mockito:mockito-core:2.18.3")
 }
