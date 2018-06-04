@@ -33,6 +33,9 @@ dependencies {
     compileOnly("com.google.auto.service:auto-service:1.0-rc4")
     annotationProcessor("com.google.auto.service:auto-service:1.0-rc4")
 
+    compileOnly("net.ltgt.gradle.incap:incap:0.1")
+    annotationProcessor("net.ltgt.gradle.incap:incap-processor:0.1")
+
     api("com.google.auto:auto-common:0.10")
     api("com.google.guava:guava:25.1-jre")
     implementation(project(":")) {

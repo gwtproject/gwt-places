@@ -107,7 +107,6 @@ class PlaceHistoryMapperProcessingStep implements ProcessingStep {
   private void generate(PlaceHistoryGeneratorContext context) throws IOException {
     TypeSpec.Builder builder =
         TypeSpec.classBuilder(context.implName)
-            // XXX: add factoryType, place types and tokenizer types as originating elements?
             .addOriginatingElement(context.interfaceType)
             // TODO: add @Generated annotation
             .addModifiers(Modifier.PUBLIC)
