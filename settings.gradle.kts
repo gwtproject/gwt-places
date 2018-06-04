@@ -1,3 +1,3 @@
-rootProject.name = "place"
+rootProject.name = "gwt-places"
 
 include("processor")

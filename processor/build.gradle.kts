@@ -2,13 +2,13 @@ import net.ltgt.gradle.apt.* // ktlint-disable no-wildcard-imports
 
 plugins {
     id("local.java-library")
+    id("local.maven-publish")
     id("net.ltgt.apt") version "0.15"
 }
 apply(from = "funcTest.gradle.kts")
 apply(from = "gwtTest.gradle.kts")
 
-group = "org.gwtproject.place"
-version = "HEAD-SNAPSHOT"
+base.archivesBaseName = "gwt-places-processor"
 
 // src/testSupport/java will be compiled twiced: once with annotation processing, and once without
 java.sourceSets {
