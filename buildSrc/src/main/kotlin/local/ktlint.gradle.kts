@@ -6,7 +6,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    ktlint("com.github.shyiko:ktlint:0.23.1")
+    ktlint("com.github.shyiko:ktlint:0.27.0")
 }
 
 val verifyKtlint by tasks.creating(JavaExec::class) {
