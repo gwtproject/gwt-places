@@ -28,7 +28,7 @@ dependencies {
 }
 
 val jar by tasks.getting(Jar::class) {
-    from(java.sourceSets["main"].allJava)
+    from(sourceSets["main"].allJava)
 }
 
 googleJavaFormat {

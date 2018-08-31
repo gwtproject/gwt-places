@@ -18,7 +18,7 @@ val javadocJar by tasks.creating(Jar::class) {
 
 val sourcesJar by tasks.creating(Jar::class) {
     classifier = "sources"
-    from(java.sourceSets["main"].allSource)
+    from(sourceSets["main"].allSource)
 }
 
 val sonatypeRepository = publishing.repositories.maven {
@@ -78,7 +78,7 @@ inline val Project.isSnapshot
 
 inline val Project.base: BasePluginConvention
     get() = the()
-inline val Project.java: JavaPluginConvention
+inline val Project.sourceSets: SourceSetContainer
     get() = the()
 inline val Project.publishing: PublishingExtension
     get() = the()

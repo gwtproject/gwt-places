@@ -20,16 +20,16 @@ val generateGwtTestSources by tasks.creating(Copy::class) {
     mustRunAfter(tasks["compileFuncTestJava"])
 }
 
-java.sourceSets {
-    "gwtTest" {
+sourceSets {
+    create("gwtTest") {
         java {
             srcDirs(files(generateGwtTestSources.destinationDir).builtBy(generateGwtTestSources))
             srcDir("src/testSupport/java")
         }
-        compileClasspath += project.java.sourceSets["funcTest"].compileClasspath
+        compileClasspath += sourceSets["funcTest"].compileClasspath
         runtimeClasspath += output + compileClasspath +
-            project.java.sourceSets["main"].allJava.sourceDirectories +
-            project.java.sourceSets["gwtTest"].allJava.sourceDirectories +
+            sourceSets["main"].allJava.sourceDirectories +
+            sourceSets["gwtTest"].allJava.sourceDirectories +
             files((tasks["compileGwtTestJava"] as JavaCompile).options.annotationProcessorGeneratedSourcesDirectory)
     }
 }
@@ -56,8 +56,8 @@ val gwtTest by tasks.creating(Test::class) {
         mkdir(cacheDir)
     }
 
-    testClassesDirs = java.sourceSets["gwtTest"].output.classesDirs
-    classpath = java.sourceSets["gwtTest"].runtimeClasspath
+    testClassesDirs = sourceSets["gwtTest"].output.classesDirs
+    classpath = sourceSets["gwtTest"].runtimeClasspath
     include("**/*Suite.class")
     systemProperty("gwt.args", "-ea -draftCompile -batch module -war \"$warDir\" -workDir \"$workDir\"")
     systemProperty("gwt.persistentunitcachedir", cacheDir)
@@ -66,5 +66,5 @@ val gwtTest by tasks.creating(Test::class) {
 }
 tasks["check"].dependsOn(gwtTest)
 
-inline val Project.java: JavaPluginConvention
+inline val Project.sourceSets: SourceSetContainer
     get() = the()

@@ -28,5 +28,5 @@ tasks.withType<Javadoc> {
     }
 }
 
-val Project.java: JavaPluginConvention
+val Project.java: JavaPluginExtension
     get() = the()

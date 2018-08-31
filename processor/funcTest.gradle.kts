@@ -1,4 +1,4 @@
-val funcTestSourceSet = java.sourceSets.create("funcTest") {
+val funcTestSourceSet = sourceSets.create("funcTest") {
     java {
         srcDir("src/testSupport/java")
     }
@@ -22,5 +22,5 @@ dependencies {
     "funcTestAnnotationProcessor"(configurations["runtimeClasspath"])
 }
 
-inline val Project.java: JavaPluginConvention
+inline val Project.sourceSets: SourceSetContainer
     get() = the()

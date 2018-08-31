@@ -9,8 +9,8 @@ apply(from = "gwtTest.gradle.kts")
 base.archivesBaseName = "gwt-places-processor"
 
 // src/testSupport/java will be compiled twiced: once with annotation processing, and once without
-java.sourceSets {
-    "test" {
+sourceSets {
+    getByName("test") {
         java {
             srcDir("src/testSupport/java")
         }
