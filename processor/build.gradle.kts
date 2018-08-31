@@ -1,5 +1,3 @@
-import net.ltgt.gradle.apt.* // ktlint-disable no-wildcard-imports
-
 plugins {
     id("local.java-library")
     id("local.maven-publish")
@@ -17,11 +15,6 @@ java.sourceSets {
             srcDir("src/testSupport/java")
         }
     }
-}
-
-// Do not run annotation processor, as we'll be testing it with compile-testing
-val compileTestJava by tasks.getting(JavaCompile::class) {
-    aptOptions.annotationProcessing = false
 }
 
 repositories {

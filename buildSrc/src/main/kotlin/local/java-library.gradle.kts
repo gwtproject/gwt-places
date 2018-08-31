@@ -2,11 +2,12 @@ package local
 
 plugins {
     `java-library`
-    id("net.ltgt.errorprone")
+    id("net.ltgt.errorprone-javacplugin")
 }
 
 dependencies {
     "errorprone"("com.google.errorprone:error_prone_core:2.3.1")
+    "errorproneJavac"("com.google.errorprone:javac:9+181-r4173-1")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
