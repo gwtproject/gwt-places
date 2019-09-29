@@ -312,9 +312,9 @@ public class PlaceHistoryGeneratorContextTest {
     assertThat(context.placeTokenizerType)
         .isEqualTo(
             compilationRule.getElements().getTypeElement(PlaceTokenizer.class.getCanonicalName()));
-    assertThat(context.messager).isSameAs(messager);
-    assertThat(context.types).isSameAs(compilationRule.getTypes());
-    assertThat(context.elements).isSameAs(compilationRule.getElements());
+    assertThat(context.messager).isSameInstanceAs(messager);
+    assertThat(context.types).isSameInstanceAs(compilationRule.getTypes());
+    assertThat(context.elements).isSameInstanceAs(compilationRule.getElements());
 
     assertThat(context.interfaceType)
         .isEqualTo(compilationRule.getElements().getTypeElement(intf.getCanonicalName()));
