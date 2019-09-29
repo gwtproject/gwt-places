@@ -4,16 +4,18 @@ val funcTestSourceSet = sourceSets.create("funcTest") {
     }
 }
 
-val funcTest by tasks.creating(Test::class) {
-    description = "Runs the integration tests"
-    group = "verification"
-    testClassesDirs = funcTestSourceSet.output.classesDirs
-    classpath = funcTestSourceSet.runtimeClasspath
+tasks {
+    val funcTest by tasks.registering(Test::class) {
+        description = "Runs the integration tests"
+        group = "verification"
+        testClassesDirs = funcTestSourceSet.output.classesDirs
+        classpath = funcTestSourceSet.runtimeClasspath
 
-    mustRunAfter(tasks["test"])
+        mustRunAfter(tasks["test"])
+    }
+    "compileFuncTestJava" { mustRunAfter(tasks["test"]) }
+    "check" { dependsOn(funcTest) }
 }
-tasks["compileFuncTestJava"].mustRunAfter(tasks["test"])
-tasks["check"].dependsOn(funcTest)
 
 dependencies {
     "funcTestImplementation"("junit:junit:4.12")

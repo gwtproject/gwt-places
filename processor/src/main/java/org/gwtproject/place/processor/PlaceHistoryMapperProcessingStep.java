@@ -57,15 +57,13 @@ class PlaceHistoryMapperProcessingStep implements ProcessingStep {
         elements.getTypeElement(AbstractPlaceHistoryMapper.class.getCanonicalName());
 
     this.getPrefixAndTokenMethod =
-        ElementFilter.methodsIn(abstractPlaceHistoryMapperType.getEnclosedElements())
-            .stream()
+        ElementFilter.methodsIn(abstractPlaceHistoryMapperType.getEnclosedElements()).stream()
             .filter(method -> method.getSimpleName().contentEquals("getPrefixAndToken"))
             .findFirst()
             .get();
     this.getPrefixAndTokenMethodParameter = getPrefixAndTokenMethod.getParameters().get(0);
     this.getTokenizerMethod =
-        ElementFilter.methodsIn(abstractPlaceHistoryMapperType.getEnclosedElements())
-            .stream()
+        ElementFilter.methodsIn(abstractPlaceHistoryMapperType.getEnclosedElements()).stream()
             .filter(method -> method.getSimpleName().contentEquals("getTokenizer"))
             .findFirst()
             .get();

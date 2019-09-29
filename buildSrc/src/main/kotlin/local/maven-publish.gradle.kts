@@ -1,6 +1,7 @@
 package local
 
 plugins {
+    java
     `maven-publish`
     signing
 }
@@ -11,23 +12,27 @@ if (project != rootProject) {
 }
 
 val javadoc by tasks
-val javadocJar by tasks.creating(Jar::class) {
-    classifier = "javadoc"
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
     from(javadoc)
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    classifier = "sources"
-    from(sourceSets["main"].allSource)
+val sourcesJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.map { it.allSource })
 }
 
 val sonatypeRepository = publishing.repositories.maven {
     name = "sonatype"
-    setUrl(provider {
-        if (isSnapshot)
-            uri("https://oss.sonatype.org/content/repositories/snapshots/") else
-            uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-    })
+    setUrl(
+        provider {
+            if (isSnapshot) {
+                uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            } else {
+                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            }
+        }
+    )
     credentials {
         username = project.findProperty("ossrhUsername") as? String
         password = project.findProperty("ossrhPassword") as? String
@@ -40,8 +45,8 @@ val mavenPublication = publishing.publications.create<MavenPublication>("maven")
         artifactId = base.archivesBaseName
     }
 
-    artifact(javadocJar)
-    artifact(sourcesJar)
+    artifact(javadocJar.get())
+    artifact(sourcesJar.get())
 
     pom {
         name.set(provider { "$groupId:$artifactId" })
@@ -75,13 +80,3 @@ signing {
 
 inline val Project.isSnapshot
     get() = version.toString().endsWith("-SNAPSHOT")
-
-inline val Project.base: BasePluginConvention
-    get() = the()
-inline val Project.sourceSets: SourceSetContainer
-    get() = the()
-inline val Project.publishing: PublishingExtension
-    get() = the()
-
-fun Project.signing(configuration: SigningExtension.() -> Unit) =
-    configure(configuration)

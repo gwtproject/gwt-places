@@ -2,19 +2,20 @@ package local
 
 plugins {
     `java-library`
-    id("net.ltgt.errorprone-javacplugin")
 }
 
+apply(plugin = "net.ltgt.errorprone")
+
 dependencies {
-    "errorprone"("com.google.errorprone:error_prone_core:2.3.1")
+    "errorprone"("com.google.errorprone:error_prone_core:2.3.3")
     "errorproneJavac"("com.google.errorprone:javac:9+181-r4173-1")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-tasks.withType<JavaCompile> {
+tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
     options.compilerArgs.addAll(arrayOf("-Werror", "-Xlint:all,-processing"))
-    if (JavaVersion.current().isJava9Compatible()) {
+    if (JavaVersion.current().isJava9Compatible) {
         options.compilerArgs.addAll(arrayOf("--release", java.targetCompatibility.majorVersion))
     }
 }

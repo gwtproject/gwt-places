@@ -3,10 +3,10 @@ import java.time.Year
 plugins {
     id("local.java-library")
     id("local.maven-publish")
-    id("net.ltgt.errorprone-javacplugin") version "0.5"
-    id("com.github.sherter.google-java-format") version "0.7.1"
-    id("com.github.hierynomus.license") version "0.14.0"
-    id("local.ktlint")
+    id("net.ltgt.errorprone") version "0.8.1"
+    id("com.github.sherter.google-java-format") version "0.8"
+    id("org.jlleitschuh.gradle.ktlint") version "8.2.0"
+    id("com.github.hierynomus.license") version "0.15.0"
 }
 apply(from = "gwtTest.gradle.kts")
 
@@ -28,11 +28,19 @@ dependencies {
 }
 
 val jar by tasks.getting(Jar::class) {
-    from(sourceSets["main"].allJava)
+    from(sourceSets.main.map { it.allJava })
 }
 
 googleJavaFormat {
-    toolVersion = "1.6"
+    toolVersion = "1.7"
+}
+allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+    ktlint {
+        version.set("0.34.2")
+        enableExperimentalRules.set(true)
+    }
 }
 
 license {

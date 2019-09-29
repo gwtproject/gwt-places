@@ -1,7 +1,6 @@
 plugins {
     id("local.java-library")
     id("local.maven-publish")
-    id("net.ltgt.apt") version "0.18"
 }
 apply(from = "funcTest.gradle.kts")
 apply(from = "gwtTest.gradle.kts")

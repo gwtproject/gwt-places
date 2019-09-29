@@ -6,7 +6,8 @@ val generateGwtTestSources by tasks.creating(Copy::class) {
             "import com.google.gwt.junit.client.GWTTestCase;"
         } else {
             it.replace(
-                "extends TestCase {", """extends GWTTestCase {
+                "extends TestCase {",
+                """extends GWTTestCase {
   @Override
   public String getModuleName() { return "org.gwtproject.place.PlaceSuite"; }"""
             )
@@ -27,10 +28,10 @@ sourceSets {
             srcDir("src/testSupport/java")
         }
         compileClasspath += sourceSets["funcTest"].compileClasspath
-        runtimeClasspath += output + compileClasspath +
+        runtimeClasspath += output + sourceSets["funcTest"].runtimeClasspath +
             sourceSets["main"].allJava.sourceDirectories +
             sourceSets["gwtTest"].allJava.sourceDirectories +
-            files((tasks["compileGwtTestJava"] as JavaCompile).options.annotationProcessorGeneratedSourcesDirectory)
+            sourceSets["gwtTest"].output.generatedSourcesDirs
     }
 }
 configurations {
@@ -46,25 +47,27 @@ dependencies {
     "gwtTestRuntimeOnly"("com.google.gwt:gwt-dev:2.8.2")
 }
 
-val gwtTest by tasks.creating(Test::class) {
-    val warDir = file("$buildDir/gwt/www-test")
-    val workDir = file("$buildDir/gwt/work")
-    val cacheDir = file("$buildDir/gwt/cache")
-    doFirst {
-        mkdir(warDir)
-        mkdir(workDir)
-        mkdir(cacheDir)
+tasks {
+    val gwtTest by registering(Test::class) {
+        val warDir = file("$buildDir/gwt/www-test")
+        val workDir = file("$buildDir/gwt/work")
+        val cacheDir = file("$buildDir/gwt/cache")
+        doFirst {
+            mkdir(warDir)
+            mkdir(workDir)
+            mkdir(cacheDir)
+        }
+
+        testClassesDirs = sourceSets["gwtTest"].output.classesDirs
+        classpath = sourceSets["gwtTest"].runtimeClasspath
+        include("**/*Suite.class")
+        systemProperty("gwt.args", "-ea -draftCompile -batch module -war \"$warDir\" -workDir \"$workDir\"")
+        systemProperty("gwt.persistentunitcachedir", cacheDir)
+
+        mustRunAfter(tasks["funcTest"])
     }
-
-    testClassesDirs = sourceSets["gwtTest"].output.classesDirs
-    classpath = sourceSets["gwtTest"].runtimeClasspath
-    include("**/*Suite.class")
-    systemProperty("gwt.args", "-ea -draftCompile -batch module -war \"$warDir\" -workDir \"$workDir\"")
-    systemProperty("gwt.persistentunitcachedir", cacheDir)
-
-    mustRunAfter(tasks["funcTest"])
+    "check" { dependsOn(gwtTest) }
 }
-tasks["check"].dependsOn(gwtTest)
 
 inline val Project.sourceSets: SourceSetContainer
     get() = the()

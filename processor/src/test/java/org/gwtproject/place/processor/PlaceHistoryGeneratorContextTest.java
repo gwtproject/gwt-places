@@ -169,8 +169,7 @@ public class PlaceHistoryGeneratorContextTest {
     // correctly map prefixes to their factory method (or null)?
     assertThat(context.getTokenizerGetter(Place1.Tokenizer.PREFIX))
         .isEqualTo(
-            ElementFilter.methodsIn(factory.getEnclosedElements())
-                .stream()
+            ElementFilter.methodsIn(factory.getEnclosedElements()).stream()
                 .filter(
                     method ->
                         method.getSimpleName().contentEquals("getTokenizer1")
@@ -179,8 +178,7 @@ public class PlaceHistoryGeneratorContextTest {
                 .get());
     assertThat(context.getTokenizerGetter(TokenizerFactory.PLACE2_PREFIX))
         .isEqualTo(
-            ElementFilter.methodsIn(factory.getEnclosedElements())
-                .stream()
+            ElementFilter.methodsIn(factory.getEnclosedElements()).stream()
                 .filter(
                     method ->
                         method.getSimpleName().contentEquals("getTokenizer2")
@@ -189,8 +187,7 @@ public class PlaceHistoryGeneratorContextTest {
                 .get());
     assertThat(context.getTokenizerGetter("Place3"))
         .isEqualTo(
-            ElementFilter.methodsIn(factory.getEnclosedElements())
-                .stream()
+            ElementFilter.methodsIn(factory.getEnclosedElements()).stream()
                 .filter(
                     method ->
                         method.getSimpleName().contentEquals("getTokenizer3")

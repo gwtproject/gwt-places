@@ -22,14 +22,12 @@ import org.gwtproject.place.shared.Prefix;
 public class PrefixProcessingStep implements ProcessingStep {
   private final Messager messager;
   private final Types types;
-  private final Elements elements;
 
   private final TypeElement placeTokenizerTypeElement;
 
   public PrefixProcessingStep(Messager messager, Types types, Elements elements) {
     this.messager = messager;
     this.types = types;
-    this.elements = elements;
 
     this.placeTokenizerTypeElement =
         elements.getTypeElement(PlaceTokenizer.class.getCanonicalName());

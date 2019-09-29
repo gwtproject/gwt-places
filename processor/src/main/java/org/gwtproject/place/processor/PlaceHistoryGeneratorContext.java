@@ -263,12 +263,13 @@ class PlaceHistoryGeneratorContext {
                 ((List<AnnotationValue>)
                         AnnotationMirrors.getAnnotationValue(annotationMirror, "value").getValue())
                     .stream()
-                    .map(
-                        annotationValue -> {
-                          DeclaredType tokenizerType = (DeclaredType) annotationValue.getValue();
-                          return (TypeElement) tokenizerType.asElement();
-                        })
-                    .collect(Collectors.toSet()))
+                        .map(
+                            annotationValue -> {
+                              DeclaredType tokenizerType =
+                                  (DeclaredType) annotationValue.getValue();
+                              return (TypeElement) tokenizerType.asElement();
+                            })
+                        .collect(Collectors.toSet()))
         .orElse(Collections.emptySet());
   }
 
