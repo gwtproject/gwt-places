@@ -3,9 +3,9 @@ import java.time.Year
 plugins {
     id("local.java-library")
     id("local.maven-publish")
-    id("net.ltgt.errorprone") version "0.8.1"
+    id("net.ltgt.errorprone") version "1.1.1"
     id("com.github.sherter.google-java-format") version "0.8"
-    id("org.jlleitschuh.gradle.ktlint") version "8.2.0"
+    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("com.github.hierynomus.license") version "0.15.0"
 }
 apply(from = "gwtTest.gradle.kts")
@@ -24,7 +24,7 @@ dependencies {
     implementation("org.gwtproject.user.history:gwt-history:HEAD-SNAPSHOT")
     implementation("org.gwtproject.user.window:gwt-window:HEAD-SNAPSHOT")
 
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13")
 }
 
 val jar by tasks.getting(Jar::class) {
@@ -38,7 +38,7 @@ allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     ktlint {
-        version.set("0.34.2")
+        version.set("0.36.0")
         enableExperimentalRules.set(true)
     }
 }

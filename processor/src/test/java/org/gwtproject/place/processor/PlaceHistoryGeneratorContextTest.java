@@ -330,7 +330,7 @@ public class PlaceHistoryGeneratorContextTest {
     assertThat(context.implName).isEqualTo(intf.getSimpleName() + "Impl");
     assertThat(context.packageName).isEqualTo(intf.getPackage().getName());
 
-    verifyZeroInteractions(messager);
+    verifyNoInteractions(messager);
   }
 
   private PlaceHistoryGeneratorContext createContext(String interfaceName, String factoryName) {

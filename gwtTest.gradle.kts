@@ -31,9 +31,9 @@ sourceSets {
     }
 }
 dependencies {
-    "gwtTestImplementation"("com.google.gwt:gwt-user:2.8.2")
+    "gwtTestImplementation"("com.google.gwt:gwt-user:2.9.0")
 
-    "gwtTestRuntimeOnly"("com.google.gwt:gwt-dev:2.8.2")
+    "gwtTestRuntimeOnly"("com.google.gwt:gwt-dev:2.9.0")
 }
 
 tasks {

@@ -1,7 +1,7 @@
 package local
 
 plugins {
-    java
+    `java-base`
     `maven-publish`
     signing
 }
@@ -11,15 +11,9 @@ if (project != rootProject) {
     version = rootProject.version
 }
 
-val javadoc by tasks
-val javadocJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-    from(javadoc)
-}
-
-val sourcesJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.map { it.allSource })
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 val sonatypeRepository = publishing.repositories.maven {
@@ -44,9 +38,6 @@ val mavenPublication = publishing.publications.create<MavenPublication>("maven")
     afterEvaluate {
         artifactId = base.archivesBaseName
     }
-
-    artifact(javadocJar.get())
-    artifact(sourcesJar.get())
 
     pom {
         name.set(provider { "$groupId:$artifactId" })

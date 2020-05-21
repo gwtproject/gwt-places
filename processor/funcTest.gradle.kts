@@ -18,7 +18,7 @@ tasks {
 }
 
 dependencies {
-    "funcTestImplementation"("junit:junit:4.12")
+    "funcTestImplementation"("junit:junit:4.13")
     "funcTestImplementation"(project(":"))
     "funcTestAnnotationProcessor"(files(tasks["jar"]))
     "funcTestAnnotationProcessor"(configurations["runtimeClasspath"])
