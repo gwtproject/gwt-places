@@ -8,6 +8,24 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("com.github.hierynomus.license") version "0.15.0"
 }
+buildscript {
+    dependencyLocking {
+        lockAllConfigurations()
+        lockMode.set(LockMode.STRICT)
+    }
+}
+allprojects {
+    dependencyLocking {
+        lockAllConfigurations()
+        lockMode.set(LockMode.STRICT)
+    }
+}
+tasks {
+    register("allDependencies") {
+        dependsOn("dependencies", subprojects.map { ":${it.name}:dependencies" })
+    }
+}
+
 apply(from = "gwtTest.gradle.kts")
 
 group = "org.gwtproject.place"
