@@ -24,6 +24,9 @@ tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
     (options as CoreJavadocOptions).apply {
         addBooleanOption("Xdoclint:all,-missing", true)
+        if (JavaVersion.current().isJava9Compatible) {
+            addBooleanOption("html5", true)
+        }
         // Workaround for https://github.com/gradle/gradle/issues/5630
         addStringOption("sourcepath", "")
     }
