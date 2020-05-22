@@ -30,7 +30,7 @@ jobs:
         key: deps-${{ hashFiles('**/*gradle.lockfile') }}
 
     - name: Build with Gradle
-      run: ./gradlew --scan build
+      run: ./gradlew build
 
     - name: Before cache
       run: rm -f ~/.gradle/caches/modules-2/*.lock ~/.gradle/caches/modules-2/gc.properties
