@@ -29,7 +29,6 @@ tasks {
 apply(from = "gwtTest.gradle.kts")
 
 group = "org.gwtproject.place"
-version = "HEAD-SNAPSHOT"
 
 repositories {
     mavenCentral()

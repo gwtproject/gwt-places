@@ -8,7 +8,6 @@ plugins {
 
 if (project != rootProject) {
     group = rootProject.group
-    version = rootProject.version
 }
 
 java {
@@ -37,6 +36,9 @@ val mavenPublication = publishing.publications.create<MavenPublication>("maven")
     from(components["java"])
     afterEvaluate {
         artifactId = base.archivesBaseName
+    }
+    if (isSnapshot) {
+        version = "HEAD-SNAPSHOT"
     }
 
     pom {
@@ -70,4 +72,4 @@ signing {
 }
 
 inline val Project.isSnapshot
-    get() = version.toString().endsWith("-SNAPSHOT")
+    get() = version == Project.DEFAULT_VERSION
