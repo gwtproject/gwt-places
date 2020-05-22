@@ -33,14 +33,13 @@ version = "HEAD-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
-    api("org.gwtproject.event:gwt-event:HEAD-SNAPSHOT")
-    api("org.gwtproject.event:gwt-logical-event:HEAD-SNAPSHOT")
-    implementation("org.gwtproject.user.history:gwt-history:HEAD-SNAPSHOT")
-    implementation("org.gwtproject.user.window:gwt-window:HEAD-SNAPSHOT")
+    api("org.gwtproject.event:gwt-event:1.0.0-RC1")
+    api("org.gwtproject.event:gwt-logical-event:1.0.0-RC1")
+    implementation("org.gwtproject.user.history:gwt-history:1.0.0-RC1")
+    implementation("org.gwtproject.user.window:gwt-window:1.0.0-RC1")
 
     testImplementation("junit:junit:4.13")
 }
