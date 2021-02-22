@@ -1,10 +1,9 @@
 package org.gwtproject.place.processor;
 
 import com.google.auto.common.AnnotationMirrors;
-import com.google.auto.common.BasicAnnotationProcessor;
+import com.google.auto.common.BasicAnnotationProcessor.Step;
 import com.google.auto.common.MoreElements;
-import com.google.common.collect.SetMultimap;
-import java.lang.annotation.Annotation;
+import com.google.common.collect.ImmutableSetMultimap;
 import java.util.Collections;
 import java.util.Set;
 import javax.annotation.processing.Messager;
@@ -19,8 +18,7 @@ import javax.tools.Diagnostic;
 import org.gwtproject.place.shared.PlaceTokenizer;
 import org.gwtproject.place.shared.Prefix;
 
-@SuppressWarnings("deprecation")
-public class PrefixProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
+public class PrefixProcessingStep implements Step {
   private final Messager messager;
   private final Types types;
 
@@ -35,14 +33,13 @@ public class PrefixProcessingStep implements BasicAnnotationProcessor.Processing
   }
 
   @Override
-  public Set<? extends Class<? extends Annotation>> annotations() {
-    return Collections.singleton(Prefix.class);
+  public Set<String> annotations() {
+    return Collections.singleton(Prefix.class.getCanonicalName());
   }
 
   @Override
-  public Set<Element> process(
-      SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
-    Set<Element> elements = elementsByAnnotation.get(Prefix.class);
+  public Set<Element> process(ImmutableSetMultimap<String, Element> elementsByAnnotation) {
+    Set<Element> elements = elementsByAnnotation.get(Prefix.class.getCanonicalName());
     for (final Element element : elements) {
       switch (element.getKind()) {
         case CLASS:

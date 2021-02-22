@@ -1,8 +1,8 @@
 package org.gwtproject.place.processor;
 
-import com.google.auto.common.BasicAnnotationProcessor;
+import com.google.auto.common.BasicAnnotationProcessor.Step;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -12,7 +12,6 @@ import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.Set;
 import javax.annotation.processing.Filer;
@@ -31,8 +30,7 @@ import org.gwtproject.place.shared.PlaceTokenizer;
 import org.gwtproject.place.shared.WithFactory;
 import org.gwtproject.place.shared.WithTokenizers;
 
-@SuppressWarnings("deprecation")
-class PlaceHistoryMapperProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
+class PlaceHistoryMapperProcessingStep implements Step {
   private static final ClassName PREFIX_AND_TOKEN_CLASS_NAME =
       ClassName.get(AbstractPlaceHistoryMapper.PrefixAndToken.class);
   private static final ClassName PLACE_TOKENIZER_CLASS_NAME = ClassName.get(PlaceTokenizer.class);
@@ -72,17 +70,17 @@ class PlaceHistoryMapperProcessingStep implements BasicAnnotationProcessor.Proce
   }
 
   @Override
-  public Set<? extends Class<? extends Annotation>> annotations() {
-    return ImmutableSet.of(WithTokenizers.class, WithFactory.class);
+  public Set<String> annotations() {
+    return ImmutableSet.of(
+        WithTokenizers.class.getCanonicalName(), WithFactory.class.getCanonicalName());
   }
 
   @Override
-  public Set<Element> process(
-      SetMultimap<Class<? extends Annotation>, Element> elementsByAnnotation) {
+  public Set<Element> process(ImmutableSetMultimap<String, Element> elementsByAnnotation) {
     for (Element element :
         Sets.union(
-            elementsByAnnotation.get(WithTokenizers.class),
-            elementsByAnnotation.get(WithFactory.class))) {
+            elementsByAnnotation.get(WithTokenizers.class.getCanonicalName()),
+            elementsByAnnotation.get(WithFactory.class.getCanonicalName()))) {
       PlaceHistoryGeneratorContext context =
           PlaceHistoryGeneratorContext.create(messager, types, elements, element);
       if (context == null) {
