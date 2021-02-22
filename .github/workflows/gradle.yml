@@ -17,20 +17,11 @@ jobs:
       with:
         java-version: ${{ matrix.java_version }}
 
-    - name: Cache Gradle wrapper
-      uses: actions/cache@v1
-      with:
-        path: ~/.gradle/wrapper/dists/gradle-6.8.3-bin/
-        key: wrapper-6.8.3
-
-    - name: Cache dependencies
-      uses: actions/cache@v1
-      with:
-        path: ~/.gradle/caches/modules-2/
-        key: deps-${{ hashFiles('**/*gradle.lockfile') }}
-
     - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Before cache
-      run: rm -f ~/.gradle/caches/modules-2/*.lock ~/.gradle/caches/modules-2/gc.properties
+      uses: eskatos/gradle-command-action@v1
+      with:
+        arguments: build
+        wrapper-cache-enabled: true
+        dependencies-cache-enabled: true
+        dependencies-cache-key: '**/*gradle.lockfile'
+        dependencies-cache-exact: true
