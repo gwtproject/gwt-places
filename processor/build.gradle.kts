@@ -27,14 +27,14 @@ dependencies {
     compileOnly("net.ltgt.gradle.incap:incap:0.3")
     annotationProcessor("net.ltgt.gradle.incap:incap-processor:0.3")
 
-    api("com.google.auto:auto-common:0.10")
-    api("com.google.guava:guava:29.0-jre")
+    api("com.google.auto:auto-common:0.11")
+    api("com.google.guava:guava:30.1-jre")
     implementation(project(":")) {
         isTransitive = false
     }
-    implementation("com.squareup:javapoet:1.12.1")
+    implementation("com.squareup:javapoet:1.13.0")
 
-    testImplementation("junit:junit:4.13")
-    testImplementation("com.google.testing.compile:compile-testing:0.18")
-    testImplementation("org.mockito:mockito-core:3.3.3")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.google.testing.compile:compile-testing:0.19")
+    testImplementation("org.mockito:mockito-core:3.7.7")
 }

@@ -21,6 +21,7 @@ public class PlaceHistoryMapperProcessor extends BasicAnnotationProcessor {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   protected Iterable<? extends ProcessingStep> initSteps() {
     Messager messager = processingEnv.getMessager();
     Filer filer = processingEnv.getFiler();

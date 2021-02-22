@@ -68,14 +68,16 @@ public abstract class AbstractPlaceHistoryMapper implements PlaceHistoryMapper {
   }
 
   /**
+   * Returns the token, or null.
+   *
    * @param newPlace what needs tokenizing
-   * @return the token, or null
    */
   protected abstract PrefixAndToken getPrefixAndToken(Place newPlace);
 
   /**
+   * Returns the {@link PlaceTokenizer} registered with that token, or null.
+   *
    * @param prefix the prefix found on the history token
-   * @return the PlaceTokenizer registered with that token, or null
    */
   protected abstract PlaceTokenizer<?> getTokenizer(String prefix);
 }

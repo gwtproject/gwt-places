@@ -7,7 +7,7 @@ plugins {
 apply(plugin = "net.ltgt.errorprone")
 
 dependencies {
-    "errorprone"("com.google.errorprone:error_prone_core:2.3.4")
+    "errorprone"("com.google.errorprone:error_prone_core:2.5.1")
     "errorproneJavac"("com.google.errorprone:javac:9+181-r4173-1")
 }
 
@@ -16,7 +16,7 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
     options.compilerArgs.addAll(arrayOf("-Werror", "-Xlint:all,-processing"))
     if (JavaVersion.current().isJava9Compatible) {
-        options.compilerArgs.addAll(arrayOf("--release", java.targetCompatibility.majorVersion))
+        options.release.set(8)
     }
 }
 

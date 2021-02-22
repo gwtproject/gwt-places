@@ -52,7 +52,7 @@ public class PlaceHistoryHandler {
   public interface Historian {
     HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> valueChangeHandler);
 
-    /** @return the current history token. */
+    /** Returns the current history token. */
     String getToken();
 
     /**

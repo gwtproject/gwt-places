@@ -56,11 +56,11 @@ public class MostToLeastDerivedPlaceTypeComparatorTest {
   @Test
   public void testPlaceComparesGreaterThanAnyDerivedClass() {
     for (TypeElement p : new TypeElement[] {place1, place2, place3, place4, place5}) {
-      assertThat(comparator.compare(place, p))
-          .named(String.format("compare(place, %s)", p))
+      assertWithMessage(String.format("compare(place, %s)", p))
+          .that(comparator.compare(place, p))
           .isGreaterThan(0);
-      assertThat(comparator.compare(p, place))
-          .named(String.format("compare(%s, place)", p))
+      assertWithMessage(String.format("compare(%s, place)", p))
+          .that(comparator.compare(p, place))
           .isLessThan(0);
     }
   }
@@ -91,11 +91,11 @@ public class MostToLeastDerivedPlaceTypeComparatorTest {
       {place1, place2}, // place1 and place2 both extend directly from place
     };
     for (TypeElement[] pair : places) {
-      assertThat(comparator.compare(pair[0], pair[1]))
-          .named(String.format("compare(%s, %s)", pair[0], pair[1]))
+      assertWithMessage(String.format("compare(%s, %s)", pair[0], pair[1]))
+          .that(comparator.compare(pair[0], pair[1]))
           .isLessThan(0);
-      assertThat(comparator.compare(pair[1], pair[0]))
-          .named(String.format("compare(%s, %s)", pair[1], pair[0]))
+      assertWithMessage(String.format("compare(%s, %s)", pair[1], pair[0]))
+          .that(comparator.compare(pair[1], pair[0]))
           .isGreaterThan(0);
     }
   }

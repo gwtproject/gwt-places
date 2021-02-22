@@ -1,7 +1,7 @@
 package org.gwtproject.place.processor;
 
 import com.google.auto.common.AnnotationMirrors;
-import com.google.auto.common.BasicAnnotationProcessor.ProcessingStep;
+import com.google.auto.common.BasicAnnotationProcessor;
 import com.google.auto.common.MoreElements;
 import com.google.common.collect.SetMultimap;
 import java.lang.annotation.Annotation;
@@ -19,7 +19,8 @@ import javax.tools.Diagnostic;
 import org.gwtproject.place.shared.PlaceTokenizer;
 import org.gwtproject.place.shared.Prefix;
 
-public class PrefixProcessingStep implements ProcessingStep {
+@SuppressWarnings("deprecation")
+public class PrefixProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
   private final Messager messager;
   private final Types types;
 

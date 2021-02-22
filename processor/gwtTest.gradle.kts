@@ -1,4 +1,4 @@
-val generateGwtTestSources by tasks.creating(Copy::class) {
+val generateGwtTestSources by tasks.registering(Copy::class) {
     from("src/funcTest/java")
     into("$buildDir/generated/source/gwtTest/")
     filter {
@@ -24,7 +24,7 @@ val generateGwtTestSources by tasks.creating(Copy::class) {
 sourceSets {
     create("gwtTest") {
         java {
-            srcDirs(files(generateGwtTestSources.destinationDir).builtBy(generateGwtTestSources))
+            srcDirs(files(generateGwtTestSources.map { it.destinationDir }))
             srcDir("src/testSupport/java")
         }
         compileClasspath += sourceSets["funcTest"].compileClasspath

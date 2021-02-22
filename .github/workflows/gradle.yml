@@ -20,8 +20,8 @@ jobs:
     - name: Cache Gradle wrapper
       uses: actions/cache@v1
       with:
-        path: ~/.gradle/wrapper/dists/gradle-6.4.1-bin/
-        key: wrapper-6.4.1
+        path: ~/.gradle/wrapper/dists/gradle-6.8.3-bin/
+        key: wrapper-6.8.3
 
     - name: Cache dependencies
       uses: actions/cache@v1

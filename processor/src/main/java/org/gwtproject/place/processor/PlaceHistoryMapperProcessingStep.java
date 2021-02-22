@@ -1,6 +1,6 @@
 package org.gwtproject.place.processor;
 
-import com.google.auto.common.BasicAnnotationProcessor.ProcessingStep;
+import com.google.auto.common.BasicAnnotationProcessor;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
@@ -31,7 +31,8 @@ import org.gwtproject.place.shared.PlaceTokenizer;
 import org.gwtproject.place.shared.WithFactory;
 import org.gwtproject.place.shared.WithTokenizers;
 
-class PlaceHistoryMapperProcessingStep implements ProcessingStep {
+@SuppressWarnings("deprecation")
+class PlaceHistoryMapperProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
   private static final ClassName PREFIX_AND_TOKEN_CLASS_NAME =
       ClassName.get(AbstractPlaceHistoryMapper.PrefixAndToken.class);
   private static final ClassName PLACE_TOKENIZER_CLASS_NAME = ClassName.get(PlaceTokenizer.class);

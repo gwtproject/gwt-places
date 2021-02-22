@@ -18,10 +18,12 @@ tasks {
 }
 
 dependencies {
-    "funcTestImplementation"("junit:junit:4.13")
+    "funcTestImplementation"("junit:junit:4.13.2")
     "funcTestImplementation"(project(":"))
     "funcTestAnnotationProcessor"(files(tasks["jar"]))
-    "funcTestAnnotationProcessor"(configurations["runtimeClasspath"])
+}
+configurations {
+    "funcTestAnnotationProcessor" { extendsFrom(configurations["runtimeClasspath"]) }
 }
 
 inline val Project.sourceSets: SourceSetContainer
