@@ -12,7 +12,7 @@ dependencyLocking {
     lockAllConfigurations()
 }
 repositories {
-    jcenter()
+    mavenCentral()
 }
 kotlinDslPluginOptions {
     experimentalWarning.set(false)
