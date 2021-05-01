@@ -1,7 +1,7 @@
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    id("com.diffplug.spotless") version "5.10.2"
+    id("com.diffplug.spotless") version "5.12.4"
 }
 buildscript {
     dependencyLocking {
@@ -13,9 +13,6 @@ dependencyLocking {
 }
 repositories {
     mavenCentral()
-}
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
 spotless {
     kotlinGradle {

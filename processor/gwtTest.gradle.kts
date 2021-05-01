@@ -35,10 +35,8 @@ sourceSets {
     }
 }
 configurations {
-    getByName("gwtTestCompile").extendsFrom(getByName("funcTestCompile"))
     getByName("gwtTestImplementation").extendsFrom(getByName("funcTestImplementation"))
     getByName("gwtTestAnnotationProcessor").extendsFrom(getByName("funcTestAnnotationProcessor"))
-    getByName("gwtTestRuntime").extendsFrom(getByName("funcTestRuntime"))
     getByName("gwtTestRuntimeOnly").extendsFrom(getByName("funcTestRuntimeOnly"))
 }
 dependencies {
